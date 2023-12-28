@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks | {{ user }} {% endblock %}
+{% block content %}
+    <h1>Hi, {{ user }}</h1>
+    <hr/>
+    <a class="button" href="{% url 'create-task' %}">Create New Task</a>
+    <h2>Your Tasks</h2>
+    <div class="task-list">
+        <ul class="task">
+            {% for task in tasks %}
+                <li class="task-item">
+                    <a href="" class="task-link">
+                        <div class="task-header">
+                            <h3>{{ task.title }} ({{ task.status }})</h3>
+                            <p>Created on {{ task.created }}</p>
+                        </div>
+                        <p class="task-description">{{ task.description|truncatewords:3 }}</p>
+                        <div class="categories">
+                            Categories: {{ task.categories.all|join:", " }}
+                        </div>
+                        <div class="task-buttons">
+                            <a class="button" href="">Delete Task</a>
+                            <a class="button" href="{% url 'update-task' task.id %}">Update Task</a>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

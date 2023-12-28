@@ -1,11 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Task
 from .forms import TaskForm
 
 
 def display_tasks(request):
-    form = TaskForm()
+    
+    
+    tasks = Task.objects.all()
+    
+    return render(request, 'todo/display_tasks.html', {
+        'tasks': tasks,
+        
+    })
+    
+
+def create_task(request):
     
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -16,14 +26,45 @@ def display_tasks(request):
                 status=form.cleaned_data['status'],
                 assigned_user=User.objects.get(username='admin'),
             )
+            
             new_task.save()
             for category in form.cleaned_data['categories']:
                 new_task.categories.add(category)
+                
         return redirect('display-tasks')
     
-    tasks = Task.objects.all()
-    
-    return render(request, 'todo/list_display.html', {
-        'tasks': tasks,
+    form = TaskForm()
+
+    return render(request, 'todo/create_task.html', {
         'form': form,
+        
+    })
+
+
+def update_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            # data = form.cleaned_data
+            # task = Task(
+            #     title=data['title'],
+            #     description=data['description'],
+            #     status=data['status'],
+            #     assigned_user=User.objects.get(username='admin'),
+            # )
+            # task.save()
+            
+            # for category in data['categories']:
+            #     task.categories.add(category)
+                
+        return redirect('display-tasks')
+    
+    form = TaskForm(instance=task)
+    
+    return render(request, 'todo/update_task.html', {
+        'form': form,
+        
     })
