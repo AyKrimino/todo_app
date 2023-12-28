@@ -23,9 +23,9 @@ class Task(models.Model):
     description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     priority = models.IntegerField(default=0)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=11, choices=STATUS_CHOICES, default='pending')
     assigned_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    categories = models.ManyToManyField(Category, blank=True, null=True)
+    categories = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
         return self.title
