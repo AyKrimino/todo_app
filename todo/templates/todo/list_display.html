@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks | {{ user }} {% endblock %}
+{% block content %}
+    <h1>Hi, {{ user }}</h1>
+    <hr/>
+    <h2>Your tasks are</h2>
+    <form method="post"> {% csrf_token %}
+        {{ form.as_div }}
+        <input type="submit" value="Create Task" class="addBtn">
+    </form>
+    <div class="tasks">
+        <ul class="task">
+            {% for task in tasks %}
+                <li>
+                    {{ task.title }}
+                    ({{ task.status }})
+                    created on {{ task.created }}
+                    {{ task.description|truncatewords:3 }}
+                    <div class="categories">
+                        {{ task.categories.all|join:", " }}
+                    </div>
+                    <a href="">Delete Task</a>
+                    <a href="">Update Task</a>
+                </li>
+                <hr/>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
