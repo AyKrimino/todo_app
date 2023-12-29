@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Task{% endblock %}
+
+{% block content %}
+    <h2 style="color: red;">Please be advised that once you delete this object, the action cannot be undone.</h2>
+    <h4>Are you sure You want to delete this task "{{ task.title }}</h4>
+    <p><a href="{% url 'display-tasks' %}"></a></p>
+    <form method="post">{% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+{% endblock %}

@@ -10,7 +10,7 @@
         <ul class="task">
             {% for task in tasks %}
                 <li class="task-item">
-                    <a href="" class="task-link">
+                    <a href="{% url 'task-detail' task.id %}" class="task-link">
                         <div class="task-header">
                             <h3>{{ task.title }} ({{ task.status }})</h3>
                             <p>Created on {{ task.created }}</p>
@@ -20,7 +20,7 @@
                             Categories: {{ task.categories.all|join:", " }}
                         </div>
                         <div class="task-buttons">
-                            <a class="button" href="">Delete Task</a>
+                            <a class="button" href="{% url 'task-delete' task.id %}">Delete Task</a>
                             <a class="button" href="{% url 'update-task' task.id %}">Update Task</a>
                         </div>
                     </a>

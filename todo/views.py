@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http.response import HttpResponse
 from django.contrib.auth.models import User
+
 from .models import Task
 from .forms import TaskForm
 
@@ -59,6 +60,28 @@ def update_task(request, task_id):
         
     })
     
+
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    return render(request, 'todo/task_detail.html', {
+        'task': task,
+        
+    }) 
+    
+
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    if request.method == 'POST':
+        task.delete()
+        return redirect('display-tasks')
+    
+    return render(request, 'todo/delete_task.html', {
+        'task': task,
+        
+    })
+
 
 # htmx views to handle frontend events
 def check_task_title(request):

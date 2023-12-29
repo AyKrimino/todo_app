@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Task Detail{% endblock %}
+
+{% block content %}
+    <h2>Hi, {{ user }}</h2>
+    <div class="task-detail">
+        <h3>Task title: {{ task.title }}</h3>
+        <p>Created on {{ task.created }}</p>
+        <hr>
+        {% if task.description %}
+            <p>Description: {{ task.description }}</p>
+        {% else %}
+            <p>This task have no description yet.</p>
+        {% endif %}
+        <p>This task is {{ task.status }}</p>
+        {% if task.categories.all %}
+            <div class="categories">
+                Categories:
+                <ul>
+                    {% for category in task.categories.all %}
+                        <li>
+                            {{ category.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>This task is not assigned to any category</p>
+        {% endif %}
+    </div>
+{% endblock %}
