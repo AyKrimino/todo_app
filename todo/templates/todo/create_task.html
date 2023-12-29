@@ -6,7 +6,24 @@ CREATE NEW TASK | {{ user }}
 
 {% block content %}
     <form method="post"> {% csrf_token %}
-        {{ form.as_p }}
+        <label>{{ form.title.label_tag }}</label>
+        {{ form.title.errors }}
+        {{ form.title }}
+        <div id="title-errors"></div>
+        <br>
+        
+        <label>{{ form.description.label_tag }}</label>
+        {{ form.description }}
+        <br>
+        
+        <label>{{ form.status.label_tag }}</label>
+        {{ form.status }}
+        <br>
+        
+        <label>{{ form.categories.label_tag }}</label>
+        {{ form.categories }}
+        <br>
+
         <a class="button" href="{% url 'display-tasks' %}">Back to home</a>
         <input type="submit" value="Create Task" class="button">
     </form>

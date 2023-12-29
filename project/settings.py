@@ -22,7 +22,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Created Apps
-    'todo.apps.TodoConfig'
+    'todo.apps.TodoConfig',
+    
+    # Added Apps
+    'widget_tweaks',
+    
 ]
 
 MIDDLEWARE = [

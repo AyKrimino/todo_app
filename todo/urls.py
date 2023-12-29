@@ -8,3 +8,9 @@ urlpatterns = [
     path('update-task/<int:task_id>/', views.update_task, name='update-task'),
 
 ]
+
+htmx_urlpatterns = [
+    path('check_task_title/', views.check_task_title, name='check-task-title'),
+]
+
+urlpatterns += htmx_urlpatterns

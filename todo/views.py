@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http.response import HttpResponse
 from django.contrib.auth.models import User
 from .models import Task
 from .forms import TaskForm
@@ -48,17 +49,6 @@ def update_task(request, task_id):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            # data = form.cleaned_data
-            # task = Task(
-            #     title=data['title'],
-            #     description=data['description'],
-            #     status=data['status'],
-            #     assigned_user=User.objects.get(username='admin'),
-            # )
-            # task.save()
-            
-            # for category in data['categories']:
-            #     task.categories.add(category)
                 
         return redirect('display-tasks')
     
@@ -68,3 +58,11 @@ def update_task(request, task_id):
         'form': form,
         
     })
+    
+
+# htmx views to handle frontend events
+def check_task_title(request):
+    title = request.POST.get('title')
+    if Task.objects.filter(title=title).exists():
+        return HttpResponse('<div id="title-errors" style="color: red;">This title already exists</div>')
+    return HttpResponse('<div id="title-errors" style="color: green;">This is a valid title</div>')
